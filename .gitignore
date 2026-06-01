@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Builds
+.next/
+out/
+build/
+dist/
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log
+*.pem
+
+# Env
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+*.swp
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
