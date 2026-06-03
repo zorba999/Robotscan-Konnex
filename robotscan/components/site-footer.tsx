@@ -68,18 +68,28 @@ export function SiteFooter() {
           </div>
           <ul className="space-y-2">
             <li>
-              <Link href="/subnet/drone-nav" className="hover:underline">
-                Drone Navigation
+              <Link href="/subnets" className="hover:underline">
+                All subnets
               </Link>
             </li>
             <li>
-              <Link href="/subnet/roboarm" className="hover:underline">
-                Roboarm Manipulation
+              <Link href="/subnet/4" className="hover:underline">
+                drone-navigation
               </Link>
             </li>
             <li>
-              <Link href="/subnet/slam" className="hover:underline">
-                SLAM / 3D Mapping
+              <Link href="/subnet/7" className="hover:underline">
+                Sensor Fusion Edge
+              </Link>
+            </li>
+            <li>
+              <Link href="/subnet/5" className="hover:underline">
+                KonnexSLAM
+              </Link>
+            </li>
+            <li>
+              <Link href="/escrows" className="hover:underline">
+                PoPW Escrows
               </Link>
             </li>
           </ul>

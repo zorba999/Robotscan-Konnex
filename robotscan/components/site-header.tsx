@@ -5,9 +5,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV = [
   { href: "/", label: "Home" },
-  { href: "/subnet/drone-nav", label: "Drone Nav" },
-  { href: "/subnet/roboarm", label: "Roboarm" },
-  { href: "/subnet/slam", label: "SLAM" },
+  { href: "/subnets", label: "Subnets" },
+  { href: "/escrows", label: "PoPW Escrows" },
 ];
 
 export function SiteHeader() {

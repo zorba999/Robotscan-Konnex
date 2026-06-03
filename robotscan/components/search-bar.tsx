@@ -3,32 +3,38 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Bot, Activity, Shield, Network } from "lucide-react";
+import { Network, Search, ServerCog } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { searchAll } from "@/lib/mock-data";
 import { shortHex } from "@/lib/format";
 
-const KIND_META = {
-  robot: { label: "Robot", icon: Bot },
-  mission: { label: "Mission", icon: Activity },
-  validator: { label: "Validator", icon: Shield },
+type Hit = {
+  kind: "subnet" | "neuron";
+  label: string;
+  sublabel: string;
+  href: string;
+};
+
+const KIND_META: Record<Hit["kind"], { label: string; icon: React.ElementType }> = {
   subnet: { label: "Subnet", icon: Network },
-} as const;
+  neuron: { label: "Neuron", icon: ServerCog },
+};
 
 export function SearchBar({
   size = "md",
-  placeholder = "Search robot ID, mission, validator…",
+  placeholder = "Search subnet name, hotkey, netuid…",
 }: {
   size?: "md" | "lg";
   placeholder?: string;
 }) {
   const [query, setQuery] = React.useState("");
+  const [hits, setHits] = React.useState<Hit[]>([]);
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
   const router = useRouter();
   const containerRef = React.useRef<HTMLDivElement>(null);
-
-  const results = React.useMemo(() => searchAll(query), [query]);
+  const debouncerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reqIdRef = React.useRef(0);
 
   React.useEffect(() => {
     function onClick(e: MouseEvent) {
@@ -38,24 +44,53 @@ export function SearchBar({
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
+  React.useEffect(() => {
+    if (debouncerRef.current) clearTimeout(debouncerRef.current);
+    if (!query || query.trim().length < 2) {
+      setHits([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    debouncerRef.current = setTimeout(async () => {
+      const reqId = ++reqIdRef.current;
+      try {
+        const res = await fetch(
+          `/api/search?q=${encodeURIComponent(query.trim())}`,
+        );
+        const data = (await res.json()) as { hits: Hit[] };
+        if (reqId === reqIdRef.current) {
+          setHits(data.hits ?? []);
+          setActive(0);
+        }
+      } catch {
+        if (reqId === reqIdRef.current) setHits([]);
+      } finally {
+        if (reqId === reqIdRef.current) setLoading(false);
+      }
+    }, 220);
+    return () => {
+      if (debouncerRef.current) clearTimeout(debouncerRef.current);
+    };
+  }, [query]);
+
   const inputClass =
     size === "lg"
       ? "h-14 pl-12 pr-4 text-base rounded-xl"
       : "h-10 pl-10 pr-3 rounded-lg";
-  const iconClass =
-    size === "lg" ? "h-5 w-5 left-4" : "h-4 w-4 left-3";
+  const iconClass = size === "lg" ? "h-5 w-5 left-4" : "h-4 w-4 left-3";
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (!open) return;
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setActive((i) => Math.min(i + 1, results.length - 1));
+      setActive((i) => Math.min(i + 1, hits.length - 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setActive((i) => Math.max(i - 1, 0));
-    } else if (e.key === "Enter" && results[active]) {
+    } else if (e.key === "Enter" && hits[active]) {
       e.preventDefault();
-      router.push(results[active].href);
+      router.push(hits[active].href);
       setOpen(false);
       setQuery("");
     } else if (e.key === "Escape") {
@@ -82,14 +117,14 @@ export function SearchBar({
           className={inputClass}
         />
       </div>
-      {open && results.length > 0 && (
+      {open && hits.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-2 z-50 max-h-[60vh] overflow-y-auto rounded-xl border bg-popover shadow-lg">
-          {results.map((r, i) => {
+          {hits.map((r, i) => {
             const meta = KIND_META[r.kind];
             const Icon = meta.icon;
             return (
               <Link
-                key={r.kind + r.id}
+                key={r.kind + r.href + i}
                 href={r.href}
                 onClick={() => {
                   setOpen(false);
@@ -111,7 +146,7 @@ export function SearchBar({
                   </div>
                   <div className="text-sm font-medium truncate">{r.label}</div>
                   <div className="text-xs text-muted-foreground font-mono truncate">
-                    {r.kind === "subnet" ? r.sublabel : shortHex(r.sublabel, 10, 6)}
+                    {r.kind === "neuron" ? shortHex(r.sublabel, 10, 6) : r.sublabel}
                   </div>
                 </div>
               </Link>
@@ -119,9 +154,14 @@ export function SearchBar({
           })}
         </div>
       )}
-      {open && query && results.length === 0 && (
+      {open && query && hits.length === 0 && !loading && (
         <div className="absolute left-0 right-0 top-full mt-2 z-50 rounded-xl border bg-popover px-4 py-6 text-center text-sm text-muted-foreground shadow-lg">
-          No results for &quot;{query}&quot;.
+          No live matches for &quot;{query}&quot;.
+        </div>
+      )}
+      {open && loading && (
+        <div className="absolute left-0 right-0 top-full mt-2 z-50 rounded-xl border bg-popover px-4 py-3 text-xs text-muted-foreground shadow-lg">
+          Searching chain…
         </div>
       )}
     </div>
