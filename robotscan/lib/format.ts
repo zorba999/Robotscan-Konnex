@@ -1,5 +1,3 @@
-import type { TrustTier } from "./types";
-
 export function shortHex(s: string, head = 6, tail = 4): string {
   if (!s) return "";
   if (s.length <= head + tail + 3) return s;
@@ -46,13 +44,6 @@ export function timeAgo(date: Date): string {
 export function formatDate(date: Date): string {
   return date.toISOString().slice(0, 19).replace("T", " ") + " UTC";
 }
-
-export const TRUST_TIER_COLORS: Record<TrustTier, string> = {
-  Bronze: "text-amber-700 bg-amber-50 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/60",
-  Silver: "text-slate-700 bg-slate-100 border-slate-200 dark:bg-slate-900/60 dark:text-slate-300 dark:border-slate-700",
-  Gold: "text-yellow-700 bg-yellow-50 border-yellow-200 dark:bg-yellow-950/40 dark:text-yellow-400 dark:border-yellow-900/60",
-  Diamond: "text-sky-700 bg-sky-50 border-sky-200 dark:bg-sky-950/40 dark:text-sky-400 dark:border-sky-900/60",
-};
 
 export const STATUS_COLORS: Record<string, string> = {
   active: "text-emerald-700 bg-emerald-50 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-900/60",

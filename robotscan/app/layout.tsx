@@ -43,7 +43,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider delayDuration={200}>
+          <TooltipProvider delay={200}>
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />
