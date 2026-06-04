@@ -5,8 +5,9 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV = [
   { href: "/", label: "Home" },
+  { href: "/map", label: "Map" },
   { href: "/subnets", label: "Subnets" },
-  { href: "/escrows", label: "PoPW Escrows" },
+  { href: "/escrows", label: "Escrows" },
 ];
 
 export function SiteHeader() {

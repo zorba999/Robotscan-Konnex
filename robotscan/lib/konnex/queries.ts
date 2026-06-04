@@ -359,3 +359,44 @@ export async function getEscrows(): Promise<LiveResult<Escrow[]>> {
   const r = await withApi(readEscrows, [] as Escrow[]);
   return { ...r, endpoint: RPC_ENDPOINT };
 }
+
+export type Axon = {
+  netuid: number;
+  subnetName: string;
+  uid: number;
+  hotkey: string;
+  ip: string;
+  port: number;
+  ipVersion: number;
+  alphaStake: number;
+  validatorPermit: boolean;
+  active: boolean;
+};
+
+export async function getAllAxons(): Promise<LiveResult<Axon[]>> {
+  const r = await withApi(async (api): Promise<Axon[]> => {
+    const subnets = await readSubnets(api);
+    const populated = subnets.filter((s) => s.neurons > 0);
+    const axons: Axon[] = [];
+    for (const subnet of populated) {
+      const neurons = await readNeurons(api, subnet.netuid);
+      for (const n of neurons) {
+        if (!n.ip || n.port <= 0) continue;
+        axons.push({
+          netuid: subnet.netuid,
+          subnetName: subnet.name,
+          uid: n.uid,
+          hotkey: n.hotkey,
+          ip: n.ip,
+          port: n.port,
+          ipVersion: n.ipVersion,
+          alphaStake: n.alphaStake,
+          validatorPermit: n.validatorPermit,
+          active: n.active,
+        });
+      }
+    }
+    return axons;
+  }, [] as Axon[]);
+  return { ...r, endpoint: RPC_ENDPOINT };
+}

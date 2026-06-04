@@ -58,6 +58,20 @@ export default async function HomePage() {
               placeholder="Search subnet name, hotkey (5G…), netuid…"
             />
           </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs">
+            <Link
+              href="/map"
+              className="inline-flex items-center gap-1.5 rounded-full border bg-background/80 px-3 py-1.5 font-medium hover:bg-background"
+            >
+              🌍 Open the robot world map →
+            </Link>
+            <Link
+              href="/subnets"
+              className="inline-flex items-center gap-1.5 rounded-full border bg-background/40 px-3 py-1.5 text-muted-foreground hover:bg-background"
+            >
+              Browse {stats.value.totalSubnets} subnets
+            </Link>
+          </div>
         </div>
       </section>
 
