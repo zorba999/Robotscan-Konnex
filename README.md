@@ -1,59 +1,92 @@
-# Robotscan — Konnex Explorer
+# Robotscan
 
-> The public ledger of verified physical work on Konnex. Search every subnet, neuron, validator, and PoPW escrow — with the world map of where the machines actually run.
+> The public ledger of verified physical work on Konnex. Search every subnet, neuron, validator, and PoPW escrow, with the world map of where the machines actually run.
 
-This is a community-built block explorer focused on **robot-centric views** for the [Konnex](https://docs.konnex.world) network. The default Konnex explorer surfaces blocks and transactions; Robotscan surfaces **robots, missions, validators, and PoPW bundles** — the way operators, insurers, and regulators actually need to reason about a physical-AI fleet.
+**Live: [robotscan-konnex.vercel.app](https://robotscan-konnex.vercel.app)**
 
-Submitted under the [Konnex Subnet Builder Program](https://subnets.testnet.konnex.world/builders) — sensor fusion & PoPW validation track.
+Robotscan is an open, robot-centric explorer for the [Konnex](https://docs.konnex.world) network. The default block explorer surfaces blocks and extrinsics. Robotscan surfaces what a Konnex user actually needs to reason about: subnets, neurons (miners and validators), their on-chain identity, their axon endpoints, and PoPW escrows.
 
-## What it does
+Submitted under the [Konnex Subnet Builder Program](https://subnets.testnet.konnex.world/builders).
 
-- 🤖 **Robot pages** — identity, TEE attestation, mission timeline, trust score (Bronze → Diamond), total earned
-- 🛰️ **Mission pages** — instruction, GPS trajectory, sensor traces (speed/accel/gyro/temp/battery), validator scores
-- 🌐 **Subnet leaderboards** — robots ranked by trust score, recent missions, active validators
-- 🛡️ **Validator pages** — stakes, missions validated, agreement rate vs. consensus
-- 🔍 **Live search** — robot name, mission ID, validator with keyboard navigation
-- 🌓 Dark mode, mobile responsive
+## What you can do here
+
+- **Search any subnet, neuron, or validator** from the global search bar.
+- **Browse every workload class** on `/subnets`: name, description, GitHub, neuron count.
+- **Inspect a subnet** on `/subnet/[netuid]`: validators, miners, axon endpoints, α stake, role.
+- **Look up a neuron** on `/robot/[hotkey]`: identity, stake, endpoint, subnet context.
+- **See the physical fleet** on `/map`: every axon geolocated on a world map, grouped by country, city, and hosting provider.
+- **Track PoPW work** on `/escrows`: the `KonnexEscrow` table renders the moment a payer locks tKNX.
+
+Every page is live: data is read directly from the Konnex testnet RPC and re-validated automatically.
+
+## On chain today
+
+A snapshot from a recent render. Numbers refresh on every page load.
+
+| Signal | Value |
+|---|---|
+| Active subnets | 31 |
+| Registered neurons | 326 |
+| Total α stake | ~343,700 tKNX |
+| Total issuance | ~692M tKNX |
+| Neurons geolocated on the map | 134 |
+| Distinct countries on the map | 18 |
 
 ## Stack
 
-- **Next.js 16** (App Router) + React 19 + TypeScript
-- **Tailwind CSS v4** + **shadcn/ui** (zinc theme)
-- **Recharts** for sensor charts, custom SVG for trajectory plots
-- **@faker-js/faker** for deterministic mock data (Phase 1)
+- **Next.js 16** with the App Router, React 19, TypeScript.
+- **Tailwind CSS v4** and **shadcn/ui** for the design system.
+- **@polkadot/api** for live reads against the Konnex testnet (Substrate, Subtensor fork).
+- **react-leaflet** with the CartoDB Dark Matter basemap for the world map.
+- **ip-api.com** batch endpoint for IPv4 geolocation, with an in-memory cache.
 
-## Roadmap
+## Routes
 
-### Phase 1 — MVP with mock data ✅
-Full UI shipped with deterministic seeded data so the user flow can be reviewed end-to-end without testnet dependency.
-
-### Phase 2 — Real Konnex data
-- Subsquid indexer subscribing to Konnex Substrate L1 events
-- Replace mock layer with live GraphQL queries
-- IPFS gateway for PoPW bundle previews
-
-### Phase 3 — Public APIs & B2B
-- GraphQL API for partner integrations
-- TrustScore-as-a-service for insurance and B2B
-- Mapbox real-map trajectories
-
-## Local development
-
-```bash
-cd robotscan
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
+| Path | Purpose |
+|---|---|
+| `/` | live chain stats and populated subnets at a glance |
+| `/subnets` | every workload class registered on Konnex |
+| `/subnet/[netuid]` | per-subnet view: neurons, roles, axons, stake |
+| `/robot/[hotkey]` | per-neuron lookup across all subnets |
+| `/map` | world map of advertised axon endpoints |
+| `/escrows` | `KonnexEscrow` activity feed |
+| `/api/search` | live search across subnets and hotkeys |
 
 ## Project layout
 
 ```
 .
-├── robotscan/        # Next.js frontend
-│   ├── app/          # routes (/, /robot, /mission, /subnet, /validator)
-│   ├── components/   # UI + domain components
-│   └── lib/          # types, mock data, format helpers
-└── .claude/          # Claude Code config (launch.json)
+├── robotscan/              Next.js app
+│   ├── app/                routes
+│   ├── components/         UI and domain components
+│   ├── lib/konnex/         chain client, queries, decode helpers, geolocation
+│   └── scripts/            chain reconnaissance and integration probes
+└── README.md
 ```
+
+## Development
+
+Prerequisites: Node.js 20.17 or newer.
+
+| Command | Purpose |
+|---|---|
+| `npm install` | install dependencies |
+| `npm run dev` | start the development server |
+| `npm run build` | build for production |
+| `npm run lint` | run ESLint |
+
+All commands run from inside `robotscan/`. The RPC endpoint defaults to `wss://testnet-rpc1.konnex.world:39944` and can be overridden with `KONNEX_RPC_URL`.
+
+## Roadmap
+
+**Now.** Live reads against the Konnex testnet, world map of axon endpoints, debounced search across subnets and hotkeys, `KonnexEscrow` table ready for the first funded task.
+
+**Next.** A Subsquid indexer subscribing to chain events for historical PoPW queries, a public GraphQL API for partner integrations, IPFS previews for PoPW bundles.
+
+**Later.** Validator-weights network graph, embeddable widgets for subnet owners, reputation scoring as a service for insurers and B2B partners.
+
+## Acknowledgments
+
+Built on the public [Konnex testnet](https://subnets.testnet.konnex.world). Community-built, not affiliated with Konnex Inc.
+
+If you are a subnet owner and want your subnet identity to render correctly here, make sure the `subnetName`, `description`, `githubRepo`, and `subnetUrl` fields are set on chain.
