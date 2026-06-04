@@ -43,9 +43,9 @@ export default async function HomePage() {
             />
           </div>
           <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
-            The Etherscan for{" "}
+            The public ledger of{" "}
             <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-emerald-600 bg-clip-text text-transparent">
-              autonomous machines
+              verified physical work
             </span>
           </h1>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">

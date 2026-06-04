@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s · Robotscan",
   },
   description:
-    "The Etherscan for autonomous machines. Search any robot, mission, or validator on Konnex — full Proof-of-Physical-Work history, trajectories, and reputation.",
+    "The public ledger of verified physical work on Konnex. Search every subnet, neuron, validator, and PoPW escrow — with the world map of where the machines actually run.",
 };
 
 export default function RootLayout({

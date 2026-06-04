@@ -1,6 +1,6 @@
 # Robotscan — Konnex Explorer
 
-> The Etherscan for autonomous machines. Search any robot, mission, or validator on Konnex — full Proof-of-Physical-Work (PoPW) history, trajectories, sensor data, and on-chain reputation.
+> The public ledger of verified physical work on Konnex. Search every subnet, neuron, validator, and PoPW escrow — with the world map of where the machines actually run.
 
 This is a community-built block explorer focused on **robot-centric views** for the [Konnex](https://docs.konnex.world) network. The default Konnex explorer surfaces blocks and transactions; Robotscan surfaces **robots, missions, validators, and PoPW bundles** — the way operators, insurers, and regulators actually need to reason about a physical-AI fleet.
 

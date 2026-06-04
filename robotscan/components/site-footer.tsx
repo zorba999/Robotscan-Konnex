@@ -7,9 +7,9 @@ export function SiteFooter() {
         <div className="sm:col-span-2">
           <div className="text-base font-bold tracking-tight">Robotscan</div>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-            The Etherscan for autonomous machines. Search any robot, mission,
-            or validator on Konnex — full Proof-of-Physical-Work history,
-            trajectories, and reputation.
+            The public ledger of verified physical work on Konnex. Search every
+            subnet, neuron, validator, and PoPW escrow — with the world map of
+            where the machines actually run.
           </p>
           <p className="mt-3 text-xs text-muted-foreground">
             Community-built explorer. Not affiliated with Konnex Inc.
