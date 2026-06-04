@@ -49,7 +49,7 @@ export default async function HomePage() {
             </span>
           </h1>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-            Live view of the Konnex testnet. Search subnets, neurons, validators —
+            Live view of the Konnex testnet. Search subnets, neurons, validators,
             and watch Proof-of-Physical-Work escrows settle on-chain.
           </p>
           <div className="mt-6 mx-auto max-w-2xl">
@@ -194,7 +194,7 @@ export default async function HomePage() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold">
-                    Phase 2 — PoPW indexer
+                    Phase 2: PoPW indexer
                   </h3>
                   <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
                     KonnexEscrow is live on-chain. Once subnet teams begin funding

@@ -18,11 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Robotscan — Konnex Explorer",
+    default: "Robotscan · Konnex Explorer",
     template: "%s · Robotscan",
   },
   description:
-    "The public ledger of verified physical work on Konnex. Search every subnet, neuron, validator, and PoPW escrow — with the world map of where the machines actually run.",
+    "The public ledger of verified physical work on Konnex. Search every subnet, neuron, validator, and PoPW escrow, plus the world map of where the machines actually run.",
 };
 
 export default function RootLayout({

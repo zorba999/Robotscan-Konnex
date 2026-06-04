@@ -239,7 +239,7 @@ function NeuronsTable({
                       {n.ip}:{n.port}
                     </span>
                   ) : (
-                    <span className="text-muted-foreground">—</span>
+                    <span className="text-muted-foreground">not advertised</span>
                   )}
                 </TableCell>
                 <TableCell className="text-right tabular-nums font-medium">

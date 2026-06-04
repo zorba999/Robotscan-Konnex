@@ -38,7 +38,7 @@ export default async function EscrowsPage() {
         <h1 className="text-3xl font-bold tracking-tight">PoPW Escrows</h1>
         <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
           Tasks funded via the <code className="font-mono">KonnexEscrow</code>{" "}
-          pallet — a payer locks tKNX, resolvers vote on completion, and funds
+          pallet. A payer locks tKNX, resolvers vote on completion, and funds
           release on majority approval (or refund after deadline).
         </p>
       </header>

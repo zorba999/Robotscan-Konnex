@@ -12,7 +12,7 @@ export default function NotFound() {
       </h1>
       <p className="text-muted-foreground">
         The robot, mission, or validator you searched for isn&apos;t indexed yet.
-        Double-check the hash — or browse a subnet to see live activity.
+        Double-check the hash, or browse a subnet to see live activity.
       </p>
       <div className="max-w-xl mx-auto">
         <SearchBar size="lg" />

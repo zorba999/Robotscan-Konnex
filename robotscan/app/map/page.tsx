@@ -39,8 +39,8 @@ export default async function MapPage() {
       active: a.active,
       lat: g.lat,
       lng: g.lng,
-      country: g.country ?? "—",
-      city: g.city ?? "—",
+      country: g.country ?? "Unknown country",
+      city: g.city ?? "Unknown city",
       isp: g.isp ?? "",
     });
   }
@@ -95,8 +95,8 @@ export default async function MapPage() {
         </h1>
         <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
           Every axon endpoint advertised on Konnex testnet, geolocated from its
-          IPv4 address. Konnex is a physical-AI network — these are the actual
-          machines.
+          IPv4 address. Konnex is a physical-AI network, and these are the
+          actual machines.
         </p>
       </header>
 

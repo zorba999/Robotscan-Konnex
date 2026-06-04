@@ -306,9 +306,9 @@ export async function getChainStats(): Promise<LiveResult<ChainStats>> {
   const fallback: ChainStats = {
     chain: "Konnex Testnet",
     nodeName: "Subtensor Node",
-    version: "—",
+    version: "unknown",
     block: 0,
-    finalizedHash: "—",
+    finalizedHash: "unknown",
     peers: 0,
     isSyncing: false,
     totalSubnets: 0,

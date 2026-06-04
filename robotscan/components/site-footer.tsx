@@ -8,7 +8,7 @@ export function SiteFooter() {
           <div className="text-base font-bold tracking-tight">Robotscan</div>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
             The public ledger of verified physical work on Konnex. Search every
-            subnet, neuron, validator, and PoPW escrow — with the world map of
+            subnet, neuron, validator, and PoPW escrow, plus the world map of
             where the machines actually run.
           </p>
           <p className="mt-3 text-xs text-muted-foreground">

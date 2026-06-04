@@ -63,7 +63,7 @@ async function main() {
       api.query.subtensorModule.owner(n.hotkey),
     ]);
     const axon = axonRaw.toJSON();
-    const ip = axon ? ipFromU32(axon.ip) : "—";
+    const ip = axon ? ipFromU32(axon.ip) : "-";
     const port = axon ? axon.port : 0;
     const alpha = alphaRaw ? raoToTknx(alphaRaw.toString()) : 0;
     console.log(

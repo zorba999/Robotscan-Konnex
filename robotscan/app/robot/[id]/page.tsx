@@ -104,7 +104,9 @@ export default async function NeuronDetailPage({ params }: Props) {
                 {neuron.ip}:{neuron.port}
               </span>
             ) : (
-              <span className="text-base text-muted-foreground">—</span>
+              <span className="text-base text-muted-foreground">
+                not advertised
+              </span>
             )
           }
           hint={
@@ -150,7 +152,7 @@ export default async function NeuronDetailPage({ params }: Props) {
                   {neuron.coldkey ? (
                     <CopyHash value={neuron.coldkey} head={12} tail={10} />
                   ) : (
-                    <span className="text-muted-foreground">—</span>
+                    <span className="text-muted-foreground">not set</span>
                   )}
                 </dd>
               </div>
@@ -158,14 +160,16 @@ export default async function NeuronDetailPage({ params }: Props) {
                 <Activity className="mt-0.5 h-3.5 w-3.5 text-muted-foreground" />
                 <dt className="text-muted-foreground w-24">Axon block</dt>
                 <dd className="flex-1 font-mono text-xs">
-                  {neuron.axonBlock > 0 ? `#${formatNumber(neuron.axonBlock)}` : "—"}
+                  {neuron.axonBlock > 0
+                    ? `#${formatNumber(neuron.axonBlock)}`
+                    : "not advertised"}
                 </dd>
               </div>
               <div className="flex items-start gap-2">
                 <Cpu className="mt-0.5 h-3.5 w-3.5 text-muted-foreground" />
                 <dt className="text-muted-foreground w-24">Axon version</dt>
                 <dd className="flex-1 font-mono text-xs">
-                  {neuron.axonVersion || "—"}
+                  {neuron.axonVersion || "not advertised"}
                 </dd>
               </div>
             </dl>
